@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+      <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Orbitron Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Poppins Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Montserrat Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>VCF Contacts Gain</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+    :root {
+      --neon-blue: #00f3ff;
+      --mint-green: #00FF85;
+      --neon-green: #8EFF73;
+      --primary-green:#00ff9d;
+      --primary-blue:#1E6EFF;
+      --warm-purple: #7B61FF;
+      --dark-bg: #0A0A0A;
+      --navblack-bg: #101015;
+    }
+    * {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+    a {
+      color:inherit;
+      text-decoration:none;
+    }
+    body {
+      padding-top:100px;
+      background:var(--dark-bg);
+      background-image:linear-gradient(
+        to right,
+        rgba(255,255,255,0.05)1px,
+        transparent 1px),
+        linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.05)1px,
+        transparent 2px);
+      background-size:80px 80px;
+      font-family:Roboto, Arial;
+    }
+    body::before {
+      content:'';
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background: radial-gradient(ellipse at 100% 0%, 
+        rgba(20,255,236,0.2) 0%,
+        transparent 50%);
+        pointer-events:none;
+        z-index:1;
+    }
+      .header {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        height:80px;
+        display:flex;
+        align-items:center;
+        color:white;
+        justify-content:space-between;
+        border-bottom:1px solid rgba(250,250,250,0.15);
+        z-index:100;
+        backdrop-filter:blur(10px);
+      }
+      .left {
+        display:flex;
+        align-items:center;
+      }
+      .techtxt {
+        color:white;
+        margin-left:3px;
+        width:48px;
+        padding-left:5px;
+        border:2px solid white;
+        border-radius:100px;
+        font-size:18px;
+      }
+      .funtxt {
+        color:white;
+        text-decoration:overline;
+        font-weight:500;
+        font-size:18px;
+      }
+      .left-div,
+      .right-div {
+        margin-right:30px;
+        margin-left:30px;
+        display:flex;
+        align-items:center;
+      }
+      /* Digital Clock */
+      .digital-clock {
+        font-family: Poppins, sans-serif;
+        font-size: 1rem;
+        color: var(--primary-green);
+        border: 1px solid rgba(96, 96, 96, 0.7);
+        padding: 10px 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 255, 236, 0.2);
+      }
+      /* Toggle Button */
+      /*
+      .toggle-btn {
+        background: transparent;
+        padding:8px;
+        display:flex;
+        border:1px solid rgba(96,96,96,0.7);
+        border-radius:6px;
+        box-shadow:0 0 10px rgba(20,255,236,0.2);
+        transition:opacity 0.2s;
+      }
+      .toggle-btn:hover {
+        opacity:0.7;
+      } 
+      .right-div img {
+        height:20px;
+        filter:invert(1);
+      } 
+      .hamburger-div {
+        display:flex;
+        border:1px solid rgba(96,96,96,0.7);
+        border-radius:6px;
+        margin-right:30px;
+        box-shadow:0 0 10px rgba(20,255,236,0.2);
+        transition:opacity 0.2s;
+        padding: 10px 8px;
+        position:relative;
+      }
+      .hamburger-div img{
+        height:26px;
+        filter:invert(1);
+      }
+      .ham-section {
+        position:absolute;
+        bottom:-233px;
+        left:0;
+        display:flex;
+        flex-direction:column;
+        background:black;
+        padding:5px;
+        transition: opacity 0.3s;
+        z-index:100;
+        opacity:0;
+        pointer-events:none;
+      }
+     .ham-section div {
+        padding:5px 15px;
+        border-bottom:1px solid rgba(255,255,255,0.6);
+        display:flex;
+        align-items:center;
+        width:395px;
+        height:40px;
+        font-family:Roboto, Arial;
+        font-size:15px;
+        color:white;
+        font-weight:500;
+        cursor:pointer;
+      }
+      .hamburger-div:hover .ham-section {
+        opacity:1;
+      } */
+      .fade-in {
+        animation:fadeIn 0.8s ease-in;
+      }
+      @keyframes fadeIn {
+        0% {opacity:0;}
+        100% {opacity:1;}
+      }
+      .glow-div {
+        margin-top:47px;
+        margin-bottom:45px;
+        width:150px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:6px 2px;
+        font-family:Roboto, Arial;
+        background-color:#0D2E2A;
+        border:1px solid var(--mint-green);
+        border-radius:30px;
+        backdrop-filter:blur(10px);
+      }
+      .contact-txt {
+        white-space:nowrap;
+        font-size:14px;
+        font-weight:500;
+        color:var(--mint-green);
+      }
+      .color-icon, 
+      .reg-icon {
+        width:7px;
+        height:7px;
+        margin-right:7px;
+        border-radius:50%;
+        background:var(--mint-green);
+       /* animation:pulse 2s ease-in-out infinite; */
+      }
+      /* @keyframes pulse {
+        0%,100% {
+          opacity:1;
+          transform:scale(1);
+        }
+        50% {
+        opacity:0.4;
+        transform:scale(0.8);
+        }
+      } */
+      .h1-text {
+        text-align:center;
+        color:white;
+        line-height:50px;
+        font-size:37px;
+        font-family:Poppins, sans-serif;
+      }
+      .span-gain {
+        color: transparent;
+        background:linear-gradient(90deg, var(--neon-green), var(--neon-blue),var(--primary-blue));
+        background-clip:text;
+        text-shadow: 0 0 60px var(--neon-blue);
+        white-space:nowrap;
+      }
+      .cursor-blink {
+        display:inline-block;
+        width:2px;
+        height:40px;
+        background:var(--neon-blue);
+        animation:blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        0%, 100% {opacity:1;}
+        50% {opacity:0;}
+      }
+      .h3-text {
+        color:rgb(255,255,255,0.6);
+        text-align:center;
+        font-weight:400;
+        line-height:28px;
+        margin-top:25px;
+        margin-bottom:65px;
+      }
+      .join-button {
+        font-family:Roboto, Arial;
+        font-size:16px;
+        font-weight:bold;
+        border:none;
+        border-radius:6px;
+        height:48px;
+        width:150px;
+        background:var(--neon-blue);
+        cursor:pointer;
+        padding:1px 16px;
+        margin-bottom:115px;
+      }
+      .fa-arrow-right {
+        font-size:12px;
+      }
+      .input-div {
+        padding:20px;
+        width:380px;
+        height:460px;
+        display:flex;
+        flex-direction:column;
+        box-sizing:border-box;
+        border-radius:20px;
+        border:1px solid rgba(255,255,255,0.2);
+        backdrop-filter:blur(10px);
+        transition:transform 0.3s;
+        margin-left:20px;
+        margin-bottom:100px;
+    }
+    .input-div:hover {
+      border:1px solid rgba(25,255,255,0.2);
+      box-shadow:0 0 7px rgba(25,255,255,0.2);
+      transform: translateY(-5px);
+    }
+    .input-div input {
+      width:100%;
+      height:50px;
+      color:white;
+      padding-left:14px;
+      font-family:Montserrat, sans-serif;
+      font-size:14px;
+      background:var(--navblack-bg);
+      border:1px solid rgba(255,255,255,0.1);
+      margin-bottom:30px;
+      border-radius:10px;
+      transition:0.2s;
+    }
+     .input-div input::placeholder {
+      font-family:Montserrat, sans-serif;
+      font-size: 14px;
+      font-weight:500;
+      color:rgba(255,255,255,0.5);
+    }
+    .input-div input:focus {
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+      outline:none;
+      border-color:rgba(25,255,255,0.4);
+    }
+    .input-div label {
+      display: block;
+      color:rgba(255,255,255,0.7);
+      font-family:Montserrat, sans-serif;
+      font-size:15px;
+      font-weight:500;
+      margin-bottom:10px;
+    }
+    .contact-title {
+      margin-top:20px;
+      margin-bottom:30px;
+      color:white;
+      text-shadow: 0 0 1px #14FFEC, 0 0 5px #14FFEC;
+      text-align:center;
+    }
+    .submit-button {
+      height:50px;
+      width:100%;
+      color:white;
+      font-family:Roboto, Arial;
+      font-weight:bold;
+      font-size:14px;
+      border-radius:14px;
+      border:none;
+      cursor:pointer;
+      background:linear-gradient(90deg, var( --warm-purple), var(--neon-blue));
+      margin-top:40px;
+      transition:opacity 0.3s;
+    }
+    .submit-button:hover {
+      opacity:0.7;
+    }
+    .input-wrapper {
+      position:relative;
+      display:flex;
+      flex-direction:column;
+    }
+    .code-p {
+      margin:0;
+      margin-left:10px;
+      position: absolute;
+      bottom:0;
+      color:rgba(255,255,255,0.4);
+      font-family:Montserrat, sans-serif;
+      font-size:14px;
+    }
+    .div-progress {
+      width:380px;
+      box-sizing:border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding:20px;
+      background:var(--dark-bg);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-left:20px;
+      margin-bottom:70px;
+    }
+    .progress-no {
+      font-family:Poppins, sans-serif;
+      font-size: 40px;
+      font-weight:500;
+      color: transparent;
+      background: linear-gradient(90deg, var(--primary-blue), var(--neon-green));
+      background-clip: text;
+      text-shadow: 0 0 60px #00f3ff;
+    }
+    .percent {
+      font-family: Montserrat, sans-serif;
+      font-size:15px;
+      margin-top:8px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .no-div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reg-txt {
+      font-family: Montserrat, sans-serif;
+      font-size:16px;
+      margin-bottom:8px;
+      margin-top:8px;
+      font-weight:700;
+      color:white;
+    }
+    .progress-track{
+      width:100%;
+      height:11px;
+      background:rgba(255,255,255,0.07);
+      border-radius:100px;
+      overflow:hidden;
+      margin-top:10px;
+      position:relative;
+    }
+    .progress-fill {
+      height:100%;
+      border-radius:100px;
+      background:linear-gradient(90deg,#00FF85,#00f3ff);
+      background-size:200% 100%;
+      animation:shimmer 3s linear infinite;
+      transition:width .8s cubic-bezier(.34,1.56,.64,1);
+      position:relative;
+    }
+    .progress-fill::after{
+      content:'';
+      position:absolute;
+      right:0;
+      top:50%;
+      transform:translateY(-50%);
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 0 12px rgba(79,195,247,0.8);
+    }
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/*
+    .range-slider {
+      background:#ddd;
+      -webkit-appearance:none;
+      height:12px;
+      margin:15px 0 5px;
+      width:100%;
+      outline:none;
+      border-radius:10px;
+    }
+    .range-slider::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      width:25px;
+      height:12px;
+      background:#00f3ff;
+      border-radius:10px;
+    }
+    .range-slider::-webkit-slider-runnable-track{
+      height:12px;
+      border-radius:10px;
+      background:#25D366;
+    } */
+    .footer-container {
+      border-radius:35px;
+      border-top: 1px solid #10b981;
+      display:flex;
+      flex-direction: column;
+      align-items:center;
+      background:#0A0A0A;
+      padding:40px 20px;
+      color:rgba(255,255,255,0.6);
+    }
+    .footer-container .rakid {
+      color:white;
+      text-shadow: 0 0 1px #14FFEC, 0 0 5px #14FFEC;
+    }
+    .footer {
+      margin-top:15px;
+      white-space:nowrap;
+    }
+    
+    </style>
+
+    <!-- ============================================================
+         VCF INTEGRATION STYLES (success modal + toast only)
+         Additive styling that matches the existing neon theme.
+         No existing rules are modified.
+    ============================================================ -->
+    <style id="vcf-integration-styles">
+      /* Success modal overlay */
+      .vcf-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.78);
+        backdrop-filter: blur(6px);
+      }
+      .vcf-modal-overlay.show {
+        display: flex;
+        animation: vcfFade 0.3s ease;
+      }
+      @keyframes vcfFade { from { opacity: 0; } to { opacity: 1; } }
+      .vcf-modal {
+        width: 100%;
+        max-width: 380px;
+        text-align: center;
+        padding: 34px 28px;
+        border-radius: 20px;
+        background: var(--card-bg, #0D1117);
+        border: 1px solid rgba(0, 243, 255, 0.25);
+        box-shadow: 0 0 50px rgba(0, 243, 255, 0.15);
+        animation: vcfPop 0.35s cubic-bezier(.34, 1.56, .64, 1);
+      }
+      @keyframes vcfPop {
+        from { opacity: 0; transform: translateY(16px) scale(.96); }
+        to   { opacity: 1; transform: none; }
+      }
+      .vcf-check {
+        width: 66px;
+        height: 66px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        color: var(--mint-green, #00FF85);
+        background: rgba(0, 255, 133, 0.12);
+        border: 1px solid var(--mint-green, #00FF85);
+      }
+      .vcf-modal h2 {
+        font-family: Poppins, sans-serif;
+        color: #fff;
+        font-size: 22px;
+        margin-bottom: 12px;
+      }
+      .vcf-modal p {
+        font-family: Montserrat, sans-serif;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        line-height: 22px;
+        margin-bottom: 14px;
+      }
+      .vcf-modal .vcf-warn { color: #e8c97e; font-weight: 600; }
+      .vcf-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        height: 50px;
+        margin-top: 12px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        font-family: Roboto, Arial;
+        font-weight: bold;
+        font-size: 15px;
+        transition: opacity 0.2s, transform 0.3s;
+      }
+      .vcf-btn:hover { opacity: 0.85; transform: translateY(-2px); }
+      .vcf-btn-wa { background: #25D366; color: #062b16; }
+      .vcf-btn-joined {
+        background: linear-gradient(90deg, var(--warm-purple, #7B61FF), var(--neon-blue, #00f3ff));
+        color: #fff;
+        display: none; /* revealed after the user opens the WhatsApp link */
+      }
+
+      /* Lightweight toast (fixed; does not affect page layout) */
+      .vcf-toast {
+        position: fixed;
+        left: 50%;
+        bottom: 28px;
+        transform: translateX(-50%) translateY(20px);
+        z-index: 1100;
+        max-width: 90%;
+        padding: 13px 20px;
+        border-radius: 12px;
+        background: #101015;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+        font-family: Montserrat, sans-serif;
+        font-size: 14px;
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+        transition: opacity 0.25s, transform 0.25s;
+      }
+      .vcf-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+      }
+      .vcf-toast.error   { border-color: rgba(192, 57, 43, 0.6); }
+      .vcf-toast.success { border-color: rgba(0, 255, 133, 0.5); }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="left-div">
+        <!--
+        <div class="hamburger-div">
+        <i class="fa-solid fa-bars"></i>
+        <div class="ham-section">
+          <div>Home</div>
+          <div>About Us</div>
+          <div>How It Works</div>
+          <div>Stats</div>
+          <div>FAQs</div>
+        </div> 
+        </div> -->
+        
+        <div class="left">
+          <div class="funtxt">Fun</div>
+          <div class="techtxt">tech</div>
+        </div>
+      </div>
+      
+      <div class="right-div">
+        <div class="digital-clock" id="digitalClock"></div>
+        <!--
+        <button class="toggle-btn" id="themeToggle">
+          <img src="/sun.png">
+        </button>  -->
+      </div>
+    </header>
+    
+    <div class="fade-in">
+    <center>
+      <div class="glow-div">
+       <div class="color-icon"></div>
+       <div class="contact-txt">VCF Contact Gain</div>
+     </div>
+    </center>
+    
+    <h1 class="h1-text">Grow Your <br> WhatsApp Status <br> Views  <br> 
+    
+    <span class="span-gain" id="typewriterTarget"></span>
+    <span class="cursor-blink"></span>
+    </h1>
+    
+    <p class="h3-text">Join an Automated Platform that secures <br> your Contact Information and Connect with us through <br> our WhatsApp Group for Updates and File Delivery.</p>
+    
+    <center>
+     <a href="https://chat.whatsapp.com/DzGcn8fnh0s8NwFqfJP0t8">
+       <button class="join-button"><i class="fab fa-whatsapp"></i> Join Group</button>
+     </a>
+    </center>
+    
+    <!-- PROGRESS -->
+    <div class="div-progress">
+      <div class="no-div">
+        <div class="reg-icon"></div>
+        <div class="reg-txt">VCF Upload Progress</div>
+      </div>
+      <div class="progress-no">
+        <span id="totalContactsCount">0</span> / <span id="targetCount">300</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="percent"><span id="pcentTxt">0%</span> complete</div>
+      </div>
+    
+    <!-- FORM -->
+    <div class="input-div">
+     <h1 class="contact-title">Register Contact</h1>
+    
+    <label for="name">Name</label>
+    
+    <input id="inputName" type="text" placeholder="Enter your name">
+    
+    <label for="number">Phone Number</label>
+    
+    <div class="input-wrapper">
+      <input type="tel" id="inputNumber" placeholder="+2348134135799">
+      <p class="code-p">Include country code (e.g. +234)</p>
+    </div>
+    
+    <button id="addContactBtn" class="submit-button" type="submit">+ ADD CONTACT</button>
+  </div>
+    
+    <footer class="footer-container">
+      <div class="left">
+         <div class="funtxt">Fun</div>
+         <div class="techtxt">tech</div>
+      </div>
+      <div class="footer">&copy; <span id="year"></span> VCF Contacts Gain. Built with ❤️ by <span class="rakid">Rakid</span></div>
+    </footer>
+    
+    </div>
+    
+    <script>
+    let currentRound=1, currentCount=0, MAX=100, isComplete=false;
+    
+        // Digital Clock
+         function updateClock() {
+              const now = new Date();
+              const hours = now.getHours().toString().padStart(2, '0');
+              const minutes = now.getMinutes().toString().padStart(2, '0');
+              const seconds = now.getSeconds().toString().padStart(2, '0');
+              document.getElementById('digitalClock').textContent = `${hours}:${minutes}:${seconds}`;
+         }
+            setInterval(updateClock, 1000);
+            updateClock();
+            
+      // Typewriter effect
+        const phrases = ["Simple Method.", "Get More Views.", "Reach More People.", "Grow Your Audience."];
+        const typewriterElement = document.getElementById('typewriterTarget');
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        function typeWriter() {
+            if (!typewriterElement) return;
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                charIndex--;
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex);
+            } else {
+                charIndex++;
+                typewriterElement.textContent = currentPhrase.substring(0, charIndex);
+            }
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                setTimeout(() => { isDeleting = true; }, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+            }
+            setTimeout(typeWriter, isDeleting ? 50 : 100);
+        }
+        setTimeout(typeWriter, 500);
+        
+  function renderUI() {
+  const pct = Math.min((currentCount / MAX) * 100, 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('pcentTxt').textContent = Math.floor(pct) + '%';
+  document.getElementById('countDisplay').innerHTML = `${currentCount} <span>/ ${MAX}</span>`;
+  document.getElementById('badgeRound').textContent = `Round ${currentRound}`;
+  document.getElementById('badgeCount').textContent = `${currentCount} / ${MAX} contacts`;
+  document.getElementById('completeBanner').classList.toggle('show', isComplete);
+  if (isComplete) {
+    document.getElementById('completeBannerText').textContent = `Round ${currentRound} is full! Download your VCF below. Round ${currentRound+1} is now open.`;
+    document.getElementById('btnAdd').disabled = true;
+    document.getElementById('dlDesc').textContent = `✅ Round ${currentRound} complete — ${MAX} contacts collected. Download ready!`;
+  } else {
+    const left = MAX - currentCount;
+    document.getElementById('btnAdd').disabled = false;
+    document.getElementById('dlDesc').textContent = `${left} more contact${left!==1?'s':''} needed to unlock the VCF for Round ${currentRound}.`;
+  }
+}
+document.getElementById("year").textContent = new Date().getFullYear()
+    </script>
+
+    <!-- ============================================================
+         SUCCESS MODAL + TOAST (added for required success flow)
+    ============================================================ -->
+    <div class="vcf-modal-overlay" id="successModal" role="dialog" aria-modal="true">
+      <div class="vcf-modal">
+        <div class="vcf-check">&#10003;</div>
+        <h2>Registration Successful</h2>
+        <p>
+          Your contact has been saved successfully.<br>
+          <span class="vcf-warn">Joining the official WhatsApp group is mandatory</span>
+          before you can receive the completed VCF contact file and future updates.
+        </p>
+        <a class="vcf-btn vcf-btn-wa" id="modalJoinBtn" href="https://chat.whatsapp.com/DzGcn8fnh0s8NwFqfJP0t8" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> Join WhatsApp Group
+        </a>
+        <button class="vcf-btn vcf-btn-joined" id="joinedBtn">I Have Joined</button>
+      </div>
+    </div>
+    <div class="vcf-toast" id="vcfToast"></div>
+
+    <!-- Supabase JS client (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- ============================================================
+         SUPABASE INTEGRATION — index.html
+         Adds: registration, validation, duplicate prevention,
+         live progress bar, success flow, WhatsApp enforcement.
+         No layout, styling or existing logic is changed.
+    ============================================================ -->
+    <script>
+    (function () {
+      "use strict";
+
+      /* ---------- 1. CONFIG (fill these in) ---------------------- */
+      const SUPABASE_URL      = "https://pjkrfwowudnbymewxzqt.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_gHW-Oy-BAoYT-dXbVcyRpg_w83elv4m";
+      // Fallbacks used only until the admin saves settings in Supabase:
+      const DEFAULT_WHATSAPP_LINK = "https://chat.whatsapp.com/DzGcn8fnh0s8NwFqfJP0t8";
+      const DEFAULT_TARGET        = 300;
+
+      /* ---------- 2. INIT CLIENT -------------------------------- */
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // runtime settings cache (overwritten by app_settings row)
+      let settings = {
+        whatsapp_link: DEFAULT_WHATSAPP_LINK,
+        registration_target: DEFAULT_TARGET,
+        website_title: "VCF Contacts Gain"
+      };
+
+      /* ---------- 3. ELEMENT REFERENCES ------------------------- */
+      const nameInput  = document.getElementById("inputName");
+      const numberInput= document.getElementById("inputNumber");
+      const addBtn     = document.getElementById("addContactBtn");
+      const totalEl    = document.getElementById("totalContactsCount");
+      const targetEl   = document.getElementById("targetCount");
+      const fillEl     = document.getElementById("progressFill");
+      const pctEl      = document.getElementById("pcentTxt");
+      const joinBtn    = document.querySelector(".join-button");
+      const joinAnchor = joinBtn ? joinBtn.closest("a") : null;
+      const modal      = document.getElementById("successModal");
+      const modalJoin  = document.getElementById("modalJoinBtn");
+      const joinedBtn  = document.getElementById("joinedBtn");
+      const toastEl    = document.getElementById("vcfToast");
+      const addBtnText = addBtn ? addBtn.textContent : "";
+
+      /* ---------- 4. HELPERS ------------------------------------ */
+      // Collapse whitespace and trim. Keeps emojis/special chars the user typed.
+      function sanitizeText(s) {
+        return (s || "").toString().trim().replace(/\s+/g, " ");
+      }
+      // Keep only digits and a single leading "+".
+      function normalizePhone(raw) {
+        let p = (raw || "").replace(/[^\d+]/g, "");
+        p = p.replace(/(?!^)\+/g, "");
+        return p;
+      }
+      // Optional leading "+", then 7–15 digits.
+      function isValidPhone(p) {
+        return /^\+?\d{7,15}$/.test(p);
+      }
+      let toastTimer;
+      function showToast(msg, type) {
+        if (!toastEl) return;
+        toastEl.textContent = msg;
+        toastEl.className = "vcf-toast " + (type || "");
+        requestAnimationFrame(() => toastEl.classList.add("show"));
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove("show"), 3500);
+      }
+      function setLoading(on) {
+        if (!addBtn) return;
+        addBtn.disabled = on;
+        addBtn.style.opacity = on ? "0.7" : "";
+        addBtn.textContent = on ? "Saving…" : addBtnText;
+      }
+
+      /* ---------- 5. SETTINGS ----------------------------------- */
+      async function loadSettings() {
+        try {
+          const { data, error } = await sb
+            .from("app_settings").select("*").eq("id", 1).single();
+          if (!error && data) {
+            settings = {
+              whatsapp_link: data.whatsapp_link || DEFAULT_WHATSAPP_LINK,
+              registration_target: data.registration_target || DEFAULT_TARGET,
+              website_title: data.website_title || settings.website_title
+            };
+          }
+        } catch (e) { console.error("settings:", e); }
+        applySettings();
+      }
+      function applySettings() {
+        if (joinAnchor && settings.whatsapp_link) joinAnchor.href = settings.whatsapp_link;
+        if (modalJoin && settings.whatsapp_link)  modalJoin.href  = settings.whatsapp_link;
+        if (settings.website_title) document.title = settings.website_title;
+      }
+
+      /* ---------- 6. PROGRESS ----------------------------------- */
+      async function loadProgress() {
+        try {
+          const { count, error } = await sb
+            .from("registrations")
+            .select("*", { count: "exact", head: true });
+          if (error) { console.error("progress:", error); return; }
+          renderProgress(count || 0);
+        } catch (e) { console.error("progress:", e); }
+      }
+      function renderProgress(count) {
+        const target = settings.registration_target || DEFAULT_TARGET;
+        if (totalEl)  totalEl.textContent  = Number(count).toLocaleString();
+        if (targetEl) targetEl.textContent = Number(target).toLocaleString();
+        const pct = target > 0 ? Math.min((count / target) * 100, 100) : 0;
+        if (fillEl) fillEl.style.width = pct + "%";          // animates via existing CSS transition
+        if (pctEl)  pctEl.textContent  = pct.toFixed(1) + "%";
+      }
+
+      /* ---------- 7. REGISTRATION ------------------------------- */
+      async function handleRegister() {
+        const name  = sanitizeText(nameInput && nameInput.value);
+        const phone = normalizePhone(numberInput && numberInput.value);
+
+        if (!name)  { showToast("Please enter your name.", "error"); nameInput && nameInput.focus(); return; }
+        if (!phone) { showToast("Please enter your phone number.", "error"); numberInput && numberInput.focus(); return; }
+        if (!isValidPhone(phone)) {
+          showToast("Enter a valid number with country code, e.g. +2348012345678", "error");
+          numberInput && numberInput.focus();
+          return;
+        }
+
+        setLoading(true);
+        try {
+          const { error } = await sb
+            .from("registrations")
+            .insert({ contact_name: name, phone_number: phone });
+
+          if (error) {
+            // 23505 = unique_violation (duplicate phone number)
+            if (error.code === "23505") {
+              showToast("This phone number is already registered.", "error");
+            } else {
+              console.error("insert:", error);
+              showToast("Could not register. Please try again.", "error");
+            }
+            return;
+          }
+
+          if (nameInput)   nameInput.value = "";
+          if (numberInput) numberInput.value = "";
+          openSuccessModal();
+          loadProgress(); // immediate refresh (realtime also fires)
+        } catch (e) {
+          console.error("network:", e);
+          showToast("Network error. Check your connection and try again.", "error");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      /* ---------- 8. SUCCESS MODAL FLOW ------------------------- */
+      function openSuccessModal() {
+        if (modalJoin) modalJoin.href = settings.whatsapp_link || DEFAULT_WHATSAPP_LINK;
+        if (joinedBtn) joinedBtn.style.display = "none"; // reset to step 1
+        if (modal) modal.classList.add("show");
+      }
+      function closeSuccessModal() {
+        if (modal) modal.classList.remove("show");
+      }
+      if (modalJoin) modalJoin.addEventListener("click", () => {
+        if (joinedBtn) joinedBtn.style.display = "flex"; // reveal "I Have Joined"
+      });
+      if (joinedBtn) joinedBtn.addEventListener("click", () => {
+        closeSuccessModal();
+        showToast("Welcome aboard!", "success");
+      });
+
+      /* ---------- 9. REALTIME ----------------------------------- */
+      function subscribeRealtime() {
+        sb.channel("registrations-progress")
+          .on("postgres_changes",
+              { event: "*", schema: "public", table: "registrations" },
+              loadProgress)
+          .subscribe();
+      }
+
+      /* ---------- 10. WIRE UP + INIT ---------------------------- */
+      if (addBtn) addBtn.addEventListener("click", handleRegister);
+
+      (async function init() {
+        await loadSettings();
+        await loadProgress();
+        subscribeRealtime();
+      })();
+    })();
+    </script>
+  </body>
+</html>

@@ -495,30 +495,38 @@
     </div>
   </div>
     <script>
-    const ADMIN_PASSWORD = 'funtechgain';
-    
-     function login() {
-        const input = document.getElementById('adminPass');
-        const pass = document.getElementById('adminPass').value;
-        if (pass === ADMIN_PASSWORD) {
-          document.getElementById('loginScreen').style.display = 'none';
-          document.getElementById('dashboard').style.display = 'block';
-          startListening();
-        } else {
-          document.getElementById('loginError').style.display = 'block';
-          // Shake input briefly
-          input.style.borderColor = 'var(--error)';
-          setTimeout(() => {
-            input.style.borderColor = '';
-          }, 1000);
-        }
-      };
-      
-      function logout() {
-        document.getElementById('dashboard').style.display = 'none';
-        document.getElementById('loginScreen').style.display = 'flex';
-        document.getElementById('adminPass').value = '';
-      };
+    const ADMIN_HASH = 'ff219d5659d17143af420163aa2ab5478b34cc69c925cf851f7559266f812d28';
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function login() {
+  const input = document.getElementById('adminPass');
+  const pass = input.value;
+  const passHash = await sha256(pass);
+
+  if (passHash === ADMIN_HASH) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    startListening();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    // Shake input briefly
+    input.style.borderColor = 'var(--error)';
+    setTimeout(() => {
+      input.style.borderColor = '';
+    }, 1000);
+  }
+}
+
+function logout() {
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminPass').value = '';
+}
+
     </script>
 
     <!-- Supabase JS client (CDN) -->

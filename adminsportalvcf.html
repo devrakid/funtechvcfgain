@@ -724,6 +724,33 @@ function logout() {
   return cleaned;
 }
 
+      function downloadPreviewCSV() {
+  if (!allContacts.length) { alert("No contacts to preview yet."); return; }
+
+  const rows = allContacts.map((c) => {
+    const name = (c.contact_name || "").trim();
+    const original = (c.phone_number || "").trim();
+    const normalized = normalizeNumber(original);
+    const changed = original !== normalized ? "YES" : "no";
+    return [name, original, normalized, changed]
+      .map(v => `"${(v || "").replace(/"/g, '""')}"`)
+      .join(",");
+  });
+
+  const csv = ["Name,Original Number,Normalized Number,Changed"].concat(rows).join("\r\n");
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url  = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "vcf_preview_check.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+
       
 
       /* ---------- EXPORT VCF ------------------------------------ */

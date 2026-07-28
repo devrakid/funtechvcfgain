@@ -712,6 +712,20 @@ function logout() {
         } catch (e) { alert("Network error while clearing."); console.error(e); }
       }
 
+      function normalizeNumber(num) {
+  let cleaned = (num || "").replace(/[^\d+]/g, '');
+
+  if (cleaned.startsWith('+')) return cleaned;
+  if (cleaned.startsWith('234') && cleaned.length === 13) return '+' + cleaned;
+  if (cleaned.startsWith('0') && cleaned.length === 11) return '+234' + cleaned.slice(1);
+  if (/^[789]\d{9}$/.test(cleaned)) return '+234' + cleaned;
+  if (cleaned.length >= 10) return '+' + cleaned;
+
+  return cleaned;
+}
+
+      
+
       /* ---------- EXPORT VCF ------------------------------------ */
       function downloadVCF() {
         if (!allContacts.length) { alert("No contacts to export yet."); return; }

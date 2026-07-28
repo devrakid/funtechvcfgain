@@ -718,7 +718,8 @@ function logout() {
         // Build one vCard per contact using the EXACT name the user entered.
         const vcf = allContacts.map((c) => {
           const name = (c.contact_name || "").replace(/\r?\n/g, " ").trim();
-          const tel  = (c.phone_number || "").trim();
+          const tel  = normalizeNumber((c.phone_number || "").trim());
+
           return [
             "BEGIN:VCARD",
             "VERSION:3.0",
